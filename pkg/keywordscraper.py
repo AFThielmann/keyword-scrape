@@ -24,9 +24,9 @@ class KeyScraper:
         'wait'
         time.sleep(self.delay)
         # extend the displayed results to 100 paper
-        self.web.click("25")
-        time.sleep(self.delay)
-        self.web.click("100")
+        #self.web.click("25")
+        #time.sleep(self.delay)
+        #self.web.click("100")
         time.sleep(self.delay)
 
 
@@ -80,7 +80,7 @@ class KeyScraper:
 
         temp = []
         # extract the keywords from dictionary like but class string data
-        for i in range(len(self.keys)):
+        for i in range(3):
             temp.append(json.loads(self.keys[i]))
         self.keyword = []
         # extract the keywords
@@ -107,7 +107,7 @@ if __name__ == "__main__":
     ks.go_to_pages()
     keywords = ks.get_keywords()
     # save the keyword list
-    joblib.dump(keywords, "keyword_list.pk")
+    #joblib.dump(keywords, "keyword_list.pk")
 
 
 

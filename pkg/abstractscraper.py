@@ -16,6 +16,8 @@ class AbstractScraper:
     def __init__(self):
         # define url - is already the result of search for the keyword "Artificial Intelligence"
         self.url = "https://ieeexplore.ieee.org/search/searchresult.jsp?action=search&newsearch=true&matchBoolean=true&queryText=(%22Author%20Keywords%22:Artificial%20Intelligence)&highlight=true&returnFacets=ALL&returnType=SEARCH&matchPubs=true&rowsPerPage=100&pageNumber=1"
+        # "https://ieeexplore.ieee.org/search/searchresult.jsp?action=search&newsearch=true&matchBoolean=true&queryText=(%22Author%20Keywords%22:nuclear%20power%20plant)&highlight=true&returnFacets=ALL&returnType=SEARCH&matchPubs=true&rowsPerPage=100&pageNumber=1"
+
         self.web = webbot.Browser()
         # define a delay and wait function in order to prevent empty results when internet connection is slow
         self.delay = 3
@@ -31,7 +33,7 @@ class AbstractScraper:
 
         time.sleep(self.wait)
 
-        for i in range(2, 11):
+        for i in range(2, 5):
             time.sleep(self.wait)
             self.web.click(str(i))
             time.sleep(self.wait)
@@ -92,16 +94,14 @@ class AbstractScraper:
         return pd.DataFrame(self.abstracts)
 
 
-
-
 if __name__ == "__main__":
 
     # Execute the above code
     ks = AbstractScraper()
 
-    x = ks.open()
-    y = ks.find_links()
-    k = ks.get_abstracts()
+    html_code = ks.open()
+    links = ks.find_links()
+    abstracts = ks.get_abstracts()
 
 
 

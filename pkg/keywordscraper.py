@@ -6,6 +6,7 @@ import json
 import numpy as np
 import joblib
 
+
 class KeyScraper:
     """
     Keywordscraper
@@ -21,14 +22,13 @@ class KeyScraper:
     def open(self):
         # go to web page
         self.web.go_to(self.url)
-        'wait'
+        "wait"
         time.sleep(self.delay)
         # extend the displayed results to 100 paper
-        #self.web.click("25")
-        #time.sleep(self.delay)
-        #self.web.click("100")
+        # self.web.click("25")
+        # time.sleep(self.delay)
+        # self.web.click("100")
         time.sleep(self.delay)
-
 
     def find_links(self):
         document_links = []
@@ -39,15 +39,14 @@ class KeyScraper:
         soup = BeautifulSoup(html_page)
 
         # get the hyperlinks for all the documents and temporarily save them
-        for link in soup.findAll('a', attrs={'href': re.compile("^/document")}):
-            document_links.append(link.get('href'))
+        for link in soup.findAll("a", attrs={"href": re.compile("^/document")}):
+            document_links.append(link.get("href"))
 
         # remove unnecessary results of the href search
         matching = [s for s in document_links if "citation" in s]
 
         self.data = [i for i in document_links if i not in matching]
         time.sleep(self.delay)
-
 
     def go_to_pages(self):
         time.sleep(self.delay)
@@ -64,7 +63,7 @@ class KeyScraper:
             self.web.go_to("https://ieeexplore.ieee.org" + self.data[i])
             time.sleep(self.delay)
 
-            self.web.click('Keywords')
+            self.web.click("Keywords")
             time.sleep(self.delay)
 
             html_page = self.web.get_page_source()
@@ -72,9 +71,8 @@ class KeyScraper:
             time.sleep(self.delay)
 
             # return class str
-            for key in soup.findAll('a', attrs={"data-tealium_data": re.compile('')}):
+            for key in soup.findAll("a", attrs={"data-tealium_data": re.compile("")}):
                 self.keys.append(key.get("data-tealium_data"))
-
 
     def get_keywords(self):
 
@@ -107,7 +105,4 @@ if __name__ == "__main__":
     ks.go_to_pages()
     keywords = ks.get_keywords()
     # save the keyword list
-    #joblib.dump(keywords, "keyword_list.pk")
-
-
-
+    # joblib.dump(keywords, "keyword_list.pk")
